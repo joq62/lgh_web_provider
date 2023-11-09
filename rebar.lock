@@ -3,7 +3,7 @@
  {<<"cowlib">>,{pkg,<<"cowlib">>,<<"2.11.0">>},2},
  {<<"lgh_web">>,
   {git,"https://github.com/joq62/lgh_web.git",
-       {ref,"a2c8b763549038e4f738a0a0a551c85eee7be241"}},
+       {ref,"473568679851aaa718958ed272a67f521ee7967c"}},
   0},
  {<<"log">>,
   {git,"https://github.com/joq62/log.git",
