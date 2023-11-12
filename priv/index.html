@@ -1,66 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title>Websocket client</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #666;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        .info {
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-
-  <h1 >Välkommen till Lägenheten</h1>
-
-  
-
-  <h2 >Balkongen</h2>
-  <br>
-<div id="is_available"></div>
-<br><br>
+    <h1>Välkommen till Leches </h1>
+    <h2>Balkongen</h2>
 
 <button type="button" onclick="start_new_session();">Starta värmen </button>
 <button type="button" onclick="stop_session();">Stoppa värme </button>
-<br> <br>
-<div id="in_session"></div>
-<br>
-<div id="balcony_temp">Temp</div>
 
-<h2 >Belysning</h2>
+    <div class="info">
+        <p>Availability: <span id="is_available">Not available</span></p>
+        <p>In Session: <span id="in_session">No</span></p>
+        <p>Temperature: <span id="balcony_temp">N/A</span></p>
+    </div>
 
-<script>
-//  var ws = new WebSocket("ws://localhost:60201/please_upgrade_to_websocket");
-  
-//  var ws = new WebSocket("ws://joqhome.asuscomm.com:60201/please_upgrade_to_websocket"); 
-  var ws = new WebSocket("ws://192.168.1.201:60201/please_upgrade_to_websocket"); 
-    ws.onerror = function(event) {
-        console.error("[ME]WebSocket error observed:", event);
-    };
-    ws.onclose = function(event) {
-        console.log("[ME]WebSocket is closed now.");
-    };
+    <script>
 
-
-  ws.onmessage = function (event) {
+      var ws = new WebSocket("ws://localhost:60201/please_upgrade_to_websocket");
+      ws.onerror = function(event) {
+          console.error("[ME]WebSocket error observed:", event);
+      };
       
-      console.log(event.data);
-      var str=event.data;
-      var arr=str.split(",");
-
-      document.getElementById('is_available').innerHTML=arr[0];
-      document.getElementById('balcony_temp').innerHTML=arr[1];  
-      document.getElementById('in_session').innerHTML=arr[2];
+      ws.onclose = function(event) {
+          console.log("[ME]WebSocket is closed now.");
+      };
       
-    
-  };
-
+      ws.onmessage = function (event) {
+          console.log(event.data);
+	  var str=event.data;
+	  var arr=str.split(",");
+	  
+	  document.getElementById('is_available').innerHTML=arr[0];
+	  document.getElementById('balcony_temp').innerHTML=arr[1];  
+	  document.getElementById('in_session').innerHTML=arr[2];
+      };
 // Joqs own golden code
 
-  function start_new_session(){
-				ws.send("start_new_session");
-};
-  function stop_session(){
-				ws.send("stop_session");
-};
-
-   </script>
-
-
+      function start_new_session(){
+	  ws.send("start_new_session");
+      };
+      function stop_session(){
+	  ws.send("stop_session");
+      };
+      
+    </script>
+</body>
 </html>
